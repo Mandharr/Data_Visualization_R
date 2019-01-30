@@ -156,3 +156,55 @@ ggplot(mtcars, aes(mpg,color=cyl)) +
 ggplot(Vocab, aes(x = education, fill = vocabulary)) +
   geom_bar(position = "fill") +
   scale_fill_brewer()
+
+
+# CReate your own Pallete
+
+blues <- brewer.pal(9, "Blues")
+blue_range <- colorRampPalette(blues)
+ggplot(Vocab, aes(x = education, fill = vocabulary)) +
+  geom_bar(position = "fill") +
+  scale_fill_manual(values = blue_range(11))
+
+
+#Overlapping Histograms
+
+ggplot(mtcars, aes(mpg, fill = cyl)) +
+  geom_histogram(binwidth = 1, position="identity", alpha=0.4)
+
+# Working on line Graphs
+
+# Print out head of economics
+head(economics)
+
+# Plot unemploy as a function of date using a line plot
+ggplot(economics, aes(x = date, y = unemploy)) + geom_line()
+
+
+# Adjust plot to represent the fraction of total population that is unemployed
+ggplot(economics, aes(x = date, y = unemploy/pop)) + geom_line()
+
+# Showcase Unemployment series along iwth the recession period in rectangle box
+
+ggplot(economics, aes(x = date, y = unemploy/pop)) +
+  geom_rect(data = recess,
+            aes(xmin = begin, xmax = end, ymin = -Inf,ymax = +Inf),
+            inherit.aes = FALSE, fill = "red", alpha = 0.2) +
+  geom_line()
+
+# Multiple time Series
+
+ggplot(fish.tidy, aes(x = Year, y = Capture, color= Species)) + geom_line()
+
+# Using the Qplot
+
+qplot(factor(cyl),y=factor(vs), data= mtcars, geom = "jitter")
+
+# 2 - qplot with geom "dotplot", binaxis = "y" and stackdir = "center"
+qplot(
+  cyl, wt,
+  data =mtcars,
+  fill = am,
+  geom = "dotplot",
+  binaxis = "y",
+  stackdir = "center")
